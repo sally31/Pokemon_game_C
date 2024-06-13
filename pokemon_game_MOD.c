@@ -14,7 +14,7 @@
 #define Max_Line_Len 1000
 #define Max_Sqr_Len 100
 
-//モンスターの構造体
+
 struct Pokemon
 {
     char name[Max_Name_Len];
@@ -53,11 +53,11 @@ void processCSV_enemy(const char *file_enemy_party, struct Pokemon enemy_party[]
         return;
     }
     
+    //get the info from the second line and put it in the list(enemy_party)
     while (fgets(line, sizeof(line), file))
     {
         char *token;
         char *rest = line;
-        //int index = 0;
 
         char name[Max_Name_Len];
         int level = 0;
@@ -67,18 +67,14 @@ void processCSV_enemy(const char *file_enemy_party, struct Pokemon enemy_party[]
         token = strtok_r(rest, ",", &rest);
         if(token) strncpy(name, token, Max_Name_Len-1);
         name[Max_Name_Len - 1] = '\0'; 
-        //printf("1, %s\n", token);
 
         token = strtok_r(rest, ",", &rest);
         if(token) level = atoi(token);
-        //printf("2, %s\n", token);
 
         token = strtok_r(rest, ",", &rest);
         if(token) hp = atoi(token);
-        //printf("3, %s\n", token);
         
         enemy_party[index] = createPokemon(name, level, hp);
-        //printf("index %d %s\n",index, token);
         printf("%s\n", enemy_party[index].name);
         printf("%d\n", enemy_party[index].level);
         printf("%d\n", enemy_party[index].hp);
@@ -107,11 +103,11 @@ void processCSV_pika(const char *file_pika_party, struct Pokemon pika_party[], i
         return;
     }
     
+    //get the info from the second line and put it in the list(pika_party)
     while (fgets(line, sizeof(line), file))
     {
         char *token;
         char *rest = line;
-        //int index = 0;
 
         char name[Max_Name_Len];
         int level = 0;
@@ -121,18 +117,14 @@ void processCSV_pika(const char *file_pika_party, struct Pokemon pika_party[], i
         token = strtok_r(rest, ",", &rest);
         if(token) strncpy(name, token, Max_Name_Len-1);
         name[Max_Name_Len - 1] = '\0'; 
-        //printf("1, %s\n", token);
 
         token = strtok_r(rest, ",", &rest);
         if(token) level = atoi(token);
-        //printf("2, %s\n", token);
 
         token = strtok_r(rest, ",", &rest);
         if(token) hp = atoi(token);
-        //printf("3, %s\n", token);
         
         pika_party[index] = createPokemon(name, level, hp);
-        //printf("index %d %s\n",index, token);
         printf("%s\n", pika_party[index].name);
         printf("%d\n", pika_party[index].level);
         printf("%d\n", pika_party[index].hp);
@@ -171,18 +163,9 @@ int main()
 
 
 
-//ピカチューのhp
+//pika's level up count
 int pika_L_up = 0;
 
-/*
-void createPokemonParty(struct Pokemon party[])
-{
-    party[0] = createPokemon("smeargle", 5, 2);
-    party[1] = createPokemon("yamper", 4, 2);
-    party[2] = createPokemon("dachsbun", 3, 2);
-    party[3] = createPokemon("greavard", 2, 2);
-    party[4] = createPokemon("bidoof", 1, 2);
-}*/
 
 
 int main()
@@ -202,17 +185,8 @@ int main()
     const char *file_pika_party = "pika_party.csv";
     processCSV_enemy(file_pika_party, pika_party, &party_size);
 
-    //pikaパーティー
     int pika_party_size = 1;
 
-    //pika_party[0] = createPokemon("pikachu", 3, 5);
-
-    //createPokemonParty(party);
-
-    //createPokemonParty(enemy_party);
-
-    
-    //#define Pokemon_Max_Level 5
 
     int choice;
     
@@ -223,8 +197,8 @@ int main()
         do
         {
             j = rand() % Pokemon_Max_Level;
-        } while (!enemy_party[j].active);//activeが有効じゃなかったら
-        
+        } while (!enemy_party[j].active);
+
 
         printf("%s has appered! level %d hp %d\n", enemy_party[j].name, enemy_party[j].level, enemy_party[j].hp);
         printf("fight(1) or run away(2)");
