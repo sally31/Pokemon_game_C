@@ -1,6 +1,7 @@
-name,level,hp
-smeargle,5,2
-yamper,4,2
-dachsbun,3,2
-greavard,2,2
-bidoof,1,2
+name,level,hp,type,attack1,attack1_power,attack1_accuracy,attack2,attack2_power,attack2_accuracy,speed,active
+smeargle,50,150,normal,boop,95,90,paw,110,70,75,1
+yamper,50,150,electric,pop-pop_bolt,90,90,wagging_rail,120,60,26,1
+dachsbun,50,150,fairy,woof_woof,90,85,pretzel_ear,55,100,95,1
+greavard,50,150,ghost,splash_hair,60,100,fluffy,100,80,34,1
+bidoof,50,150,normal,yawn,50,100,bite,110,70,31,1
+fuecoco,50,150,fire,hyper_voice,90,100,snore,100,100,95,1

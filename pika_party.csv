@@ -1,2 +1,2 @@
-pokemon,level,hp
-pikachu,3,5
+pokemon,level,hp,type,attack1,attack1_power,attack1_accuracy,attack2,attack2_power,attack2_accuracy,speed,active
+pikachu,50,150,electric,thunder_bolt,90,85,quick_attack,110,70,90,1
