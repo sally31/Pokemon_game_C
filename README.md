@@ -1,5 +1,5 @@
-:explain the pokemon game. 
-how to play.
+***explain the pokemon game
+how to play
 This is a pokemon game made in C language and you can play like a real pokemon game but it's only a battle scene.
 There is no walking around the city to explore or talking to someone or catching the wild pokemon by any chance.
 First, you need to choose the file to play which has new data for new player or saved data if you saved before.
