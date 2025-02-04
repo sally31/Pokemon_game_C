@@ -13,7 +13,7 @@
 Pokemon createPokemon(const char *name, int level, int hp,
  const char *type, const char *attack1,int attack1_power,
  int attack1_accuracy, const char *attack2,int attack2_power,
- int attack2_accuracy, int speed, int active)
+ int attack2_accuracy, int speed, int active, const char *image)
 {
     Pokemon newPokemon;
     strcpy(newPokemon.name, name);
@@ -32,6 +32,8 @@ Pokemon createPokemon(const char *name, int level, int hp,
     newPokemon.attack2_accuracy = attack2_accuracy;
     newPokemon.speed = speed;
     newPokemon.active = active; 
+    strcpy(newPokemon.image, image);
+    newPokemon.image[Max_Name_Len - 1] = '\0'; 
     return newPokemon;
 }
 
@@ -64,16 +66,16 @@ void processCSV_pika(const char *file_pika_party, Pokemon pika_party[], int *par
         char name[Max_Name_Len];
         int level = 0;
         int hp = 0;
-        /*new26/6/2024*/char type[Max_Name_Len];
-        /*new26/6/2024*/char attack1[Max_Name_Len];
-        /*new26/6/2024*/int attack1_power = 0;
-        /*new26/6/2024*/int attack1_accuracy = 0;
-        /*new26/6/2024*/char attack2[Max_Name_Len];
-        /*new26/6/2024*/int attack2_power = 0;
-        /*new26/6/2024*/int attack2_accuracy = 0;
-        /*new26/6/2024*/int  speed = 0;
+        char type[Max_Name_Len];
+        char attack1[Max_Name_Len];
+        int attack1_power = 0;
+        int attack1_accuracy = 0;
+        char attack2[Max_Name_Len];
+        int attack2_power = 0;
+        int attack2_accuracy = 0;
+        int  speed = 0;
+        char image[Max_Name_Len];
 
-        //while((token = strtok_r(rest, ",", &rest)))
         token = strtok_r(rest, ",", &rest);
         if(token) strncpy(name, token, Max_Name_Len-1);
         name[Max_Name_Len - 1] = '\0';
@@ -83,9 +85,6 @@ void processCSV_pika(const char *file_pika_party, Pokemon pika_party[], int *par
 
         token = strtok_r(rest, ",", &rest);
         if(token) hp = atoi(token);
-
-
-        /*ここから追加した情報26/6/2024*/
 
         token = strtok_r(rest, ",", &rest);
         if(token) strncpy(type, token, Max_Name_Len-1);
@@ -114,14 +113,17 @@ void processCSV_pika(const char *file_pika_party, Pokemon pika_party[], int *par
         token = strtok_r(rest, ",", &rest);
         if(token) speed = atoi(token);
 
-        /*ここまで*/
-
         token = strtok_r(rest, ",", &rest);
         if(token) active = atoi(token);
+
+        token = strtok_r(rest, ",", &rest);
+        if(token) strncpy(image, token, Max_Name_Len-1);
+        image[Max_Name_Len - 1] = '\0';
+
         
         pika_party[index] = createPokemon(name, level, hp, type, 
         attack1, attack1_power, attack1_accuracy, attack2,
-        attack2_power, attack2_accuracy, speed, active);
+        attack2_power, attack2_accuracy, speed, active, image);
         printf("name:%s\n", pika_party[index].name);
         printf("level:%d\n", pika_party[index].level);
         printf("hp:%d\n", pika_party[index].hp);
@@ -134,6 +136,7 @@ void processCSV_pika(const char *file_pika_party, Pokemon pika_party[], int *par
         printf("a2_accuracy:%d\n", pika_party[index].attack2_accuracy);
         printf("speed:%d\n", pika_party[index].speed);
         printf("active:%d\n", pika_party[index].active);
+        printf("image:%s\n", pika_party[index].image);
         index++;
         printf("\n");
     }
@@ -150,7 +153,7 @@ void export_pika_CSV(const char *file_save_pika, Pokemon pika_party[], int pika_
         return;
     }
 
-    fprintf(file, "name, level, hp, type, attack1, attack1_power, attack1_accuracy, attack2, attack2_power, attack2_accuracy, speed, active\n");
+    fprintf(file, "name, level, hp, type, attack1, attack1_power, attack1_accuracy, attack2, attack2_power, attack2_accuracy, speed, active, image\n");
 
     for(int y = 0; y < pika_party_size; y++)
     {
@@ -166,22 +169,23 @@ void export_pika_CSV(const char *file_save_pika, Pokemon pika_party[], int pika_
         printf("attack2_accuracy: %d\n", pika_party[y].attack2_accuracy);
         printf("speed: %d\n", pika_party[y].speed);
         printf("active: %d\n", pika_party[y].active);
+        printf("image: %s\n", pika_party[y].image);
         printf("\n");
 
-        fprintf(file, "%s, %d, %d, %s, %s, %d, %d, %s, %d, %d, %d, %d\n", pika_party[y].name, pika_party[y].level,
+        fprintf(file, "%s, %d, %d, %s, %s, %d, %d, %s, %d, %d, %d, %d, %s\n", pika_party[y].name, pika_party[y].level,
         pika_party[y].hp, pika_party[y].type, pika_party[y].attack1, pika_party[y].attack1_power, pika_party[y].attack1_accuracy,
         pika_party[y].attack2, pika_party[y].attack2_power, pika_party[y].attack2_accuracy, pika_party[y].speed, 
-        pika_party[y].active);
+        pika_party[y].active, pika_party[y].image);
     }
     fclose(file);
 }
 
 /*____________________________________________________________________________*/
-/*セーブしたデータをインポートする*/
+/*read the save data*/
 
 void inport_from_export_pika_CSV(const char *file_save_pika, Pokemon pika_party[], int *party_size, int active)
 {
-    //ファイルの読み込み
+    //read the file
     FILE *file = fopen(file_save_pika, "r");
     if(!file)
     {
@@ -207,16 +211,16 @@ void inport_from_export_pika_CSV(const char *file_save_pika, Pokemon pika_party[
         char name[Max_Name_Len];
         int level = 0;
         int hp = 0;
-        /*new26/6/2024*/char type[Max_Name_Len];
-        /*new26/6/2024*/char attack1[Max_Name_Len];
-        /*new26/6/2024*/int attack1_power = 0;
-        /*new26/6/2024*/int attack1_accuracy = 0;
-        /*new26/6/2024*/char attack2[Max_Name_Len];
-        /*new26/6/2024*/int attack2_power = 0;
-        /*new26/6/2024*/int attack2_accuracy = 0;
-        /*new26/6/2024*/int  speed = 0;
+        char type[Max_Name_Len];
+        char attack1[Max_Name_Len];
+        int attack1_power = 0;
+        int attack1_accuracy = 0;
+        char attack2[Max_Name_Len];
+        int attack2_power = 0;
+        int attack2_accuracy = 0;
+        int  speed = 0;
+        char image[Max_Name_Len];
 
-        //while((token = strtok_r(rest, ",", &rest)))
         token = strtok_r(rest, ",", &rest);
         if(token) strncpy(name, token, Max_Name_Len-1);
         name[Max_Name_Len - 1] = '\0'; 
@@ -226,8 +230,6 @@ void inport_from_export_pika_CSV(const char *file_save_pika, Pokemon pika_party[
 
         token = strtok_r(rest, ",", &rest);
         if(token) hp = atoi(token);
-
-        /*ここから追加した情報26/6/2024*/
 
         token = strtok_r(rest, ",", &rest);
         if(token) strncpy(type, token, Max_Name_Len-1);
@@ -256,14 +258,18 @@ void inport_from_export_pika_CSV(const char *file_save_pika, Pokemon pika_party[
         token = strtok_r(rest, ",", &rest);
         if(token) speed = atoi(token);
 
-        /*ここまで*/
-
         token = strtok_r(rest, ",", &rest);
         if(token) active = atoi(token);
+
+        token = strtok_r(rest, ",", &rest);
+        if(token) strncpy(image, token, Max_Name_Len-1);
+        image[Max_Name_Len - 1] = '\0';
+        printf("Parsed image token: %s\n", token);
+
         
         pika_party[index] = createPokemon(name, level, hp, type, 
         attack1, attack1_power, attack1_accuracy, attack2,
-        attack2_power, attack2_accuracy, speed, active);
+        attack2_power, attack2_accuracy, speed, active, image);
         printf("name:%s\n", pika_party[index].name);
         printf("level:%d\n", pika_party[index].level);
         printf("hp:%d\n", pika_party[index].hp);
@@ -276,6 +282,7 @@ void inport_from_export_pika_CSV(const char *file_save_pika, Pokemon pika_party[
         printf("a2_accuracy:%d\n", pika_party[index].attack2_accuracy);
         printf("speed:%d\n", pika_party[index].speed);
         printf("active:%d\n", pika_party[index].active);
+        printf("image:%s\n", pika_party[index].image);
         index++;
         printf("\n");
     }

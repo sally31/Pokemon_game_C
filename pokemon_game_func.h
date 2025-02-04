@@ -22,19 +22,16 @@ typedef struct
     /*new26/6/2024*/int attack2_accuracy;
     /*new26/6/2024*/int  speed;
     int active;
+    char image[Max_Name_Len];
 }Pokemon;
 
 
 Pokemon createPokemon(const char *name, int level, int hp,
  const char *type, const char *attack1,int attack1_power,
  int attack1_accuracy, const char *attack2,int attack2_power,
- int attack2_accuracy, int speed, int active);
+ int attack2_accuracy, int speed, int active, const char *image);
 
 
-// Pokemon createPokemon(const char *name, int level, int hp, 
-//  const char *type, const char *attack1, int attack1_power,
-//  int attack1_accuracy, const char *attack2, int attack2_power,
-//  int attack2_accuracy, int speed, int active);
 
 
 Pokemon enemy_party[Num_Pokemon];
@@ -49,8 +46,11 @@ void processCSV_pika(const char *file_pika_party, Pokemon pika_party[], int *par
 void export_pika_CSV(const char *file_save_pika, Pokemon pika_party[], int pika_party_size);
 void inport_from_export_pika_CSV(const char *file_save_pika, Pokemon pika_party[], int *party_size, int active);
 
-void type_pokemon_enemy_attack(Pokemon enemy_party[], Pokemon pika_party[], int j, int fight_pokemon);
-void type_pokemon_pika_attack(Pokemon enemy_party[], Pokemon pika_party[], int j, int fight_pokemon);
+void type_pokemon_enemy_attack(Pokemon enemy_party[], Pokemon pika_party[], int j, int fight_pokemon, char messages[][256]);
+void type_pokemon_pika_attack(Pokemon enemy_party[], Pokemon pika_party[], int j, int fight_pokemon, char messages[][256]);
+
+int enemy_attack(int j, int fight_pokemon, char message_enemy_attack[][200]);
+int pika_attack(int fight_pokemon,int j, int attack_choice_pika, char message_pika_attack[][300]);
 
 
 #endif
