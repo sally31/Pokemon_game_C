@@ -1,3 +1,9 @@
+
+![*fighting_photo10](https://github.com/user-attachments/assets/e43ea4f5-5252-43b5-b9e5-4c6aa15a5713)
+![*fighting_photo8](https://github.com/user-attachments/assets/2105bfe6-7549-4297-826c-b594f660f1d5)
+![*fighting_photo5](https://github.com/user-attachments/assets/3c6f8e1e-39fe-4da6-be25-f7d813babcad)
+![*fighting_photo11](https://github.com/user-attachments/assets/e93af976-905b-4b27-bbf9-ce775bfc3c55)
+![*fighting_photo2](https://github.com/user-attachments/assets/4418f88d-ce27-4faf-ae32-6e8dd3a116a5)
 # explain the pokemon game  
 ## how to play  
 This is a pokemon game made in C language and you can play like a real pokemon game but it's only a battle scene.  
