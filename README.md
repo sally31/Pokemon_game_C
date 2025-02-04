@@ -1,5 +1,5 @@
-#explain the pokemon game  
-##how to play  
+# explain the pokemon game  
+## how to play  
 This is a pokemon game made in C language and you can play like a real pokemon game but it's only a battle scene.  
 There is no walking around the city to explore or talking to someone or catching the wild pokemon by any chance.  
 First, you need to choose the file to play which has new data for new player or saved data if you saved before.  
@@ -24,7 +24,7 @@ If you won the game you will get the pokemon from enemy team that you just beate
 Every time after finish the battle the game will ask you to keep continue to play or save the data and finish the game.  
 If you choose to keep continue, from the next game you can choose which pokemon in your team you want to use for the next fight and start fighting as before until all pokemon on one team are defeated them the game will be completely finished.  
 
-##explain all of the files.  
+## explain all of the files.  
 there are enemy_party.csv and pika_party.csv files.  
 they have infomations for pokemon name, level, hp, type, attack1, attack1_power, attack1_accuracy, attack2, attack2_power, attack2_accuracy, speed and active.  
 everyone have level 50 and hp 150 also everyone have 2 attacks and each one have different attack power and accuracy.  
@@ -32,11 +32,11 @@ each pokemon has different speed.
 active is on nutil the pokemon lose. if the pokemon lost active will be off so the pokemon won't be chosen for the fight.  
 Why I made CSV files and import them instead of write it in the code and it's easer, because if you want to edit the infomation you have to re-write it in the code which may cause you accidently delete your code or bugs that's why I made CSV files.  
 
-###there are enemy_import_export.c and pika_import_export.c files.  
+### there are enemy_import_export.c and pika_import_export.c files.  
 this is for import the csv files before you play game and export the files if you want to save data also import the save data as well if you want to use save data.  
 I made 2 files for each one because it's quite complicated and long code so it might have mixed also defficult to read which may cause some bugs.  
 
-###there is a type_check.c file.  
+### there is a type_check.c file.  
 this is for checking the attacker's pokemon's type and change the attack power if needed.  
 It will be called in the main file just before they attack.  
   
