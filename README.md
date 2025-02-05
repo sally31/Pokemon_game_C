@@ -54,5 +54,3 @@ there is written fighting scene and call all of the functions.
   
 there is pokemon_game_func.h file.  
 this is a header file and connect all of the functions.  
-But when you compile them you need compile below.  
-## put compile later
